@@ -29,3 +29,5 @@ For detailed explanation on how things work, checkout the [CLI Readme](https://g
 ## Resources
 
 - [Preact](https://preactjs.com/guide/v10/getting-started/)
+- [Bootstrap](https://react-bootstrap.netlify.app/)
+- [Icon set](https://remixicon.com/)

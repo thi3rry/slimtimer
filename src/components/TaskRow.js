@@ -4,12 +4,15 @@ import dayjs from "dayjs";
 import TaskTotalTime from "./TaskTotalTime";
 import TimeLog from "../models/TimeLog";
 import Task from "../models/Task";
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import {Form} from "react-bootstrap";
+
 
 const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
 
     const [isPlaying, setIsPlaying] = useState(false);
     const [description, setDescription] = useState('');
-    const [expanded, setExpanded] = useState(true);
 
 
     setIsPlaying(task?.getLastLog?.()?.type === TimeLog.TYPE_START);
@@ -61,34 +64,44 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
         <>
             <tr class={isPlaying ? 'in-progress' : ''}>
                 <td>
-                    <button type="button" onclick={() => setExpanded(!expanded)}>{expanded ? '-' : '+'}</button>
+                    <Button size={"sm"} type="button" onclick={() => updateTask(task, new Task({...task, expanded: !task.expanded}))}>{task.expanded ? '-' : '+'}</Button>
                 </td>
                 <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}>
                     {task.name}
                 </td>
-                <td><TaskTotalTime task={task}/></td>
+                <td><TaskTotalTime task={task} key={JSON.stringify(task)}/></td>
                 <td>
-                    <form action="" onsubmit={(e) => togglePlayPause(e) }>
-                        <input type="text" value={description} oninput={(e) => setDescription(e.target.value)}/>
-                        <button type="submit" >
-                            {!isPlaying && (<span>Play</span>)}
-                            {isPlaying && (<span>Pause</span>)}
+                    <Form action="" onsubmit={(e) => togglePlayPause(e) } inline={true}>
+                        <Form.Group>
+                            <Form.Control
+                                placeholder="Description"
+                                type="text"
+                                value={description}
+                                oninput={(e) => setDescription(e.target.value)}
+                            />
+                            <Button type="submit" variant="outline-dark" >
+                                {!isPlaying && (<i className="ri-play-line"></i>)}
+                                {isPlaying && (<i className="ri-pause-line"></i>)}
 
-                        </button>
-                    </form>
+                            </Button>
+                        </Form.Group>
+                    </Form>
                 </td>
 
                 <td>
-                    <button type="button" onclick={() => moveTaskUp(task)}>^</button>
-                    <button type="button" onclick={() => moveTaskDown(task)}>v</button>
-                    <button type="button" onclick={() => {
-                        const newName = prompt('Change name', task.name);
-                        updateTask(task, {...task, name: newName});
-                    }}>Edit</button>
-                    <button type="button" onclick={() => removeTask(task)}>X</button>
+                    <ButtonGroup size={"sm"}>
+
+                        <Button variant="outline-primary" type="button" onclick={() => moveTaskUp(task)}>^</Button>
+                        <Button variant="outline-primary" type="button" onclick={() => moveTaskDown(task)}>v</Button>
+                        <Button variant="outline-primary" type="button" onclick={() => {
+                            const newName = prompt('Change name', task.name);
+                            updateTask(task, {...task, name: newName});
+                        }}>Edit</Button>
+                        <Button variant="outline-primary" type="button" onclick={() => removeTask(task)}>X</Button>
+                    </ButtonGroup>
                 </td>
             </tr>
-            {expanded && (
+            {task.expanded && (
                 <>
                     <tr>
                         <td colspan="5">
@@ -98,29 +111,31 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                     {task.timeLog.map(log => (
                         <tr>
                             <td colspan="1"></td>
-                            <td><input type="date" value={log.date.format('YYYY-MM-DD')} onInput={(e) => {
+                            <td><input type="date" onkeydown={() => false} value={log.date.format('YYYY-MM-DD')} onChange={(e) => {
                                 updateLogDate(log, e.target.value);
                             }}/></td>
-                            <td><input type="time" value={log.date.format('HH:mm')} onInput={(e) => {
+                            <td><input type="time" onkeydown={() => false} value={log.date.format('HH:mm')} onChange={(e) => {
                                 updateLogDate(log, null, `${e.target.value}:00`);
 
                             }}/></td>
                             <td style={{color: log.type === TimeLog.TYPE_START ? 'green' : 'black'}}>{log.type}</td>
                             <td><blockquote>{log.description}</blockquote></td>
                             <td>
-                                <button type="button" onclick={() => {
-                                    const updatedTask = {...task};
-                                    const updatedLog = {...log};
-                                    log.description = prompt('Description ?', updatedLog.description);
-                                    log.type = prompt('Type ?', updatedLog.type);
-                                    log.date = dayjs(prompt('Date ?', updatedLog.date));
-                                    updateLog(log, log);
-                                }}>Edit</button>
-                                <button type="button" onclick={() => {
-                                    const updatedTask = new Task(task);
-                                    task.timeLog.splice(task.timeLog.indexOf(log), 1)
-                                    updateTask(task, task);
-                                }}>Remove</button>
+                                <ButtonGroup>
+                                    <Button variant="outline-primary" type="button" onclick={() => {
+                                        const updatedTask = {...task};
+                                        const updatedLog = {...log};
+                                        log.description = prompt('Description ?', updatedLog.description);
+                                        log.type = prompt('Type ?', updatedLog.type);
+                                        log.date = dayjs(prompt('Date ?', updatedLog.date));
+                                        updateLog(log, log);
+                                    }}>Edit</Button>
+                                    <Button variant="outline-danger" type="button" onclick={() => {
+                                        const updatedTask = new Task(task);
+                                        task.timeLog.splice(task.timeLog.indexOf(log), 1)
+                                        updateTask(task, task);
+                                    }}>Remove</Button>
+                                </ButtonGroup>
                             </td>
                         </tr>
                     ))}

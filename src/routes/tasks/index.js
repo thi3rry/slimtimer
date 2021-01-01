@@ -19,32 +19,37 @@ const loadStateFromStorage = () => {
 
 // Note: `user` comes from the URL, courtesy of our router
 const Tasks = () => {
-	const [tasks, updateTasks] = useState(loadStateFromStorage().tasks);
-	const setTasks = (_tasks) => {
-		const tasksUpdated = [..._tasks].map(task => new Task(task));
-		updateTasks(tasksUpdated);
+	const [tasks, setTasks] = useState(loadStateFromStorage().tasks);
+	const updateTasks = (_tasks) => {
+		const tasksUpdated = [..._tasks]
+			.map(task => new Task(task))
+			.sort((ta, tb) => ta?.position - tb?.position)
+			.map((task, i) => new Task({...task, position: i})) // recompute all position
+		;
+		setTasks(tasksUpdated);
 		window.localStorage.setItem('tasks', JSON.stringify(tasksUpdated));
 	}
-	const addTask = (_task) => {
-		setTasks([...tasks, _task]);
-	}
+
+	const addTask = useCallback((_task) => {
+		updateTasks([...tasks, _task]);
+	});
+
 	const removeTask = useCallback((task) =>{
 		tasks.splice(tasks.indexOf(task), 1)
-		setTasks(tasks);
+		updateTasks(tasks);
 	}, [tasks]);
+
 	const updateTask = useCallback((old, updatedTask) => {
-		console.log('updateTask', old, updatedTask);
 		tasks.splice(tasks.indexOf(old), 1, updatedTask)
-		setTasks(tasks);
+		updateTasks(tasks);
 	}, [tasks]);
 
 	const moveTaskUp = useCallback((task) => {
 		const currentPosition = tasks.indexOf(task);
 		if (currentPosition > 0) {
-
 			const elemToMove = tasks.splice(currentPosition, 1)[0];
 			tasks.splice(currentPosition-1, 0, elemToMove);
-			setTasks(tasks);
+			updateTasks(tasks.map((task, i) => new Task({...task, position: i})));
 		}
 	});
 
@@ -54,7 +59,7 @@ const Tasks = () => {
 
 			const elemToMove = tasks.splice(currentPosition, 1)[0];
 			tasks.splice(currentPosition+1, 0, elemToMove);
-			setTasks(tasks);
+			updateTasks(tasks.map((task, i) => new Task({...task, position: i})));
 		}
 	});
 
@@ -71,7 +76,7 @@ const Tasks = () => {
 			</p>
 
 			<div>
-				<TaskCreator onCreateTask={(newTask) => addTask(newTask)}/>
+				<TaskCreator onSubmit={(newTask) => addTask(newTask)}/>
 				<TasksList tasks={tasks} removeTask={removeTask} updateTask={updateTask} moveTaskUp={moveTaskUp} moveTaskDown={moveTaskDown} />
 			</div>
 		</div>

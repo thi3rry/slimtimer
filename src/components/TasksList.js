@@ -5,7 +5,7 @@ const TasksList = ({tasks, removeTask, updateTask, moveTaskDown, moveTaskUp}) =>
     return (
         <table class="task-list">
             {tasks.map(task => (
-                <TaskRow {...{task, removeTask, updateTask, moveTaskDown, moveTaskUp}}/>
+                <TaskRow {...{task, removeTask, updateTask, moveTaskDown, moveTaskUp}} key={JSON.stringify(task)}/>
             ))}
         </table>
     );

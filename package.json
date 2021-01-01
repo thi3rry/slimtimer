@@ -27,10 +27,13 @@
     "sirv-cli": "1.0.3"
   },
   "dependencies": {
+    "bootstrap": "^4.5.3",
     "dayjs": "^1.9.8",
     "preact": "^10.3.2",
     "preact-render-to-string": "^5.1.4",
-    "preact-router": "^3.2.1"
+    "preact-router": "^3.2.1",
+    "react-bootstrap": "^1.4.0",
+    "remixicon": "^2.5.0"
   },
   "jest": {
     "preset": "jest-preset-preact",

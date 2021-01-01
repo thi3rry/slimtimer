@@ -11,7 +11,7 @@ export default class TaskTotalTime extends Component {
     constructor() {
         super();
         this.state = {
-            lastLog: undefined,
+            lastLogType: undefined,
             totalTime: 0
         }
     }
@@ -19,7 +19,16 @@ export default class TaskTotalTime extends Component {
     componentWillMount() {
         this.setState({
             ...this.state,
-            lastLog: this.props.task.getLastLog(),
+            lastLogType: this.props.task.getLastLog?.()?.type,
+            totalTime: this.props.task.computeTime()
+        });
+    }
+
+    getDerivedStateFromProps(nextProps) {
+        this.setState({
+            ...this.state,
+            lastLogType: nextProps.task.getLastLog?.().type,
+            totalTime: this.props.task.computeTime()
         });
     }
 
@@ -27,8 +36,8 @@ export default class TaskTotalTime extends Component {
         this.timer = setInterval(() => {
             let newState = {
                 ...this.state,
-                lastLog: this.props.task.getLastLog?.(),
-                totalTime: this.props.task.computeTime?.()
+                lastLogType: this.props.task.getLastLog?.().type,
+                totalTime: this.props.task.computeTime()
             };
             this.setState(newState);
         }, 400);
@@ -39,21 +48,15 @@ export default class TaskTotalTime extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState, nextContext) {
-        const nextTask = new Task(nextProps.task);
-        return nextTask.getLastLog().type === TimeLog.TYPE_START
-            || nextTask.getLastLog().type !== nextState.lastLog.type
-            || (
-                nextTask.timeLog?.length !== this.props.task?.timeLog?.length
-                && nextTask.getLastLog().type === TimeLog.TYPE_PAUSE
-            )
-        ;
+        return nextState.lastLogType === TimeLog.TYPE_START;
     }
 
     render({task}, state, context) {
-        const days = dayjs.duration(state.totalTime).days();
-        const hours = dayjs.duration(state.totalTime).hours();
-        const minutes = dayjs.duration(state.totalTime).minutes();
-        const seconds = dayjs.duration(state.totalTime).seconds();
+        const totalTime = this.props.task.computeTime?.()
+        const days = dayjs.duration(totalTime).days();
+        const hours = dayjs.duration(totalTime).hours();
+        const minutes = dayjs.duration(totalTime).minutes();
+        const seconds = dayjs.duration(totalTime).seconds();
         return (
             <>
                 {days ? `${days}j` : ''}

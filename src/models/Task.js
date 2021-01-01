@@ -7,6 +7,7 @@ export default class Task {
     timeLog = [];
     createdAt;
     position = 0;
+    expanded = false;
 
     constructor(attr) {
         this.createdAt = dayjs(new Date());
