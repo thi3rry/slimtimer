@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import {useCallback, useState} from "preact/hooks";
 import dayjs from "dayjs";
 import TaskTotalTime from "./TaskTotalTime";

@@ -1,5 +1,5 @@
+import { h } from 'preact';
 import dayjs from "dayjs";
-
 import {useEffect, useState} from "preact/hooks";
 import {Component} from "preact";
 import TimeLog from "../models/TimeLog";

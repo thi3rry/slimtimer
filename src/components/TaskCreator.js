@@ -1,3 +1,4 @@
+import { h } from 'preact';
 import {useEffect, useState} from "preact/hooks";
 import * as dayjs from "dayjs";
 import Task from "../models/Task";
