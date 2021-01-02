@@ -6,7 +6,8 @@ import TimeLog from "../models/TimeLog";
 import Task from "../models/Task";
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import {Form} from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+import Table from "react-bootstrap/Table";
 import LogRow from "./LogRow";
 
 
@@ -59,7 +60,7 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                 <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}>
                     {task.name}
                 </td>
-                <td><TaskTotalTime task={task} key={JSON.stringify(task)}/></td>
+                <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}><TaskTotalTime task={task} key={JSON.stringify(task)}/></td>
                 <td>
                     <Form action="" onsubmit={(e) => togglePlayPause(e) } inline={true}>
                         <Form.Group>
@@ -100,9 +101,16 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                             créée le {task.createdAt.format('ddd D/MMM/YYYY à HH[h]mm')}
                         </td>
                     </tr>
-                    {task.timeLog.map(log => (
-                        <LogRow log={log} updateLog={updateLog} removeLog={removeLog}/>
-                    ))}
+                    <tr>
+                        <td colspan="5">
+                            <Table>
+
+                                {task.timeLog.map(log => (
+                                    <LogRow log={log} updateLog={updateLog} removeLog={removeLog}/>
+                                ))}
+                            </Table>
+                        </td>
+                    </tr>
                 </>
             )}
         </>

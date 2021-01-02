@@ -4,6 +4,7 @@ import {Component} from "preact";
 import TimeLog from "../models/TimeLog";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 export default class LogRow extends Component {
     state = {
@@ -108,8 +109,12 @@ export default class LogRow extends Component {
                         }}
                     />
                 </td>
-                <td style={{color: this.state.type === TimeLog.TYPE_START ? 'green' : 'black'}}>
-                    {this.state.type}
+                <td>
+                    <Form.Control style={{color: this.state.type === TimeLog.TYPE_START ? 'green' : 'black'}} as="select" value={this.state.type} custom onChange={(e) => this.updateLog({...this.state, type: e.target.value})}>
+                        <option value={this.state.type}>{this.state.type}</option>
+                        <option value="START">START</option>
+                        <option value="PAUSE">PAUSE</option>
+                    </Form.Control>
                 </td>
                 <td>
                     <blockquote>{this.state.description}</blockquote>
