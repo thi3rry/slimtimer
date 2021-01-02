@@ -1,0 +1,21 @@
+
+button {
+  @apply text-base font-medium border-2 rounded p-1 focus:ring-4 focus:outline-none;
+  &:hover {
+    background-color: #ccc;
+  }
+}
+
+.button-group {
+  button {
+    @apply border-2 rounded-t-none rounded-b-none border-l-0;
+  }
+  button:first-child {
+    @apply border-r-2 border-l-2;
+    @apply rounded-l rounded-r-none;
+  }
+  button:last-child {
+    @apply border-l-0;
+    @apply rounded-r rounded-l-none;
+  }
+}

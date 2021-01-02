@@ -4,10 +4,6 @@ import dayjs from "dayjs";
 import TaskTotalTime from "./TaskTotalTime";
 import TimeLog from "../models/TimeLog";
 import Task from "../models/Task";
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Form from "react-bootstrap/Form";
-import Table from "react-bootstrap/Table";
 import LogRow from "./LogRow";
 
 
@@ -55,43 +51,57 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
         <>
             <tr class={isPlaying ? 'in-progress' : ''}>
                 <td>
-                    <Button size={"sm"} type="button" onclick={() => updateTask(task, new Task({...task, expanded: !task.expanded}))}>{task.expanded ? '-' : '+'}</Button>
+                    <button
+                        type="button"
+                        onClick={() => {
+                            updateTask(task, new Task({...task, expanded: !task.expanded}))
+                        }}
+                    >
+                        {task.expanded ? (<i className="ri-add-box-line"></i>
+                        ) : (<i className="ri-checkbox-indeterminate-line"></i>)}
+                    </button>
                 </td>
                 <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}>
                     {task.name}
                 </td>
-                <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}><TaskTotalTime task={task} key={JSON.stringify(task)}/></td>
+                <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}>
+                    <TaskTotalTime task={task} key={JSON.stringify(task)}/>
+                </td>
                 <td>
-                    <Form action="" onsubmit={(e) => togglePlayPause(e) } inline={true}>
-                        <Form.Group>
-                            <Form.Control
+                    <form action="" onSubmit={(e) => togglePlayPause(e) }>
+                            <input
                                 placeholder={isPlaying ? "Réellement fait" : "Prévue"}
                                 type="text"
                                 value={description}
-                                oninput={(e) => setDescription(e.target.value)}
+                                onInput={(e) => setDescription(e.target.value)}
                             />
-                            <Button type="submit" variant="outline-dark" >
-                                {!isPlaying && (<i className="ri-play-line"></i>)}
-                                {isPlaying && (<i className="ri-pause-line"></i>)}
+                            <button type="submit" >
+                                {!isPlaying && (<i class="ri-play-line"></i>)}
+                                {isPlaying && (<i class="ri-pause-line"></i>)}
 
-                            </Button>
-                        </Form.Group>
-                    </Form>
+                            </button>
+                    </form>
                 </td>
 
                 <td>
-                    <ButtonGroup size={"sm"}>
-
-                        <Button variant="outline-primary" type="button" onclick={() => moveTaskUp(task)}>^</Button>
-                        <Button variant="outline-primary" type="button" onclick={() => moveTaskDown(task)}>v</Button>
-                        <Button variant="outline-primary" type="button" onclick={() => {
+                    <div className="button-group">
+                        <button type="button" onClick={() => moveTaskUp(task)}><i className="ri-arrow-up-line"></i>
+                        </button>
+                        <button type="button" onClick={() => moveTaskDown(task)}><i className="ri-arrow-down-line"></i>
+                        </button>
+                        <button type="button" onClick={() => {
                             const newName = prompt('Change name', task.name);
-                            if (newName !== null && newName != task.name) {
+                            if (newName !== null && newName !== task.name) {
                                 updateTask(task, {...task, name: newName});
                             }
-                        }}>Edit</Button>
-                        <Button variant="outline-primary" type="button" onclick={() => removeTask(task)}>X</Button>
-                    </ButtonGroup>
+                        }}><i className="ri-edit-2-line"></i>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => removeTask(task)}
+                        ><i className="ri-delete-bin-2-line"></i>
+                        </button>
+                    </div>
                 </td>
             </tr>
             {task.expanded && (
@@ -103,12 +113,12 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                     </tr>
                     <tr>
                         <td colspan="5">
-                            <Table>
+                            <table class="table-auto">
 
                                 {task.timeLog.map(log => (
                                     <LogRow log={log} updateLog={updateLog} removeLog={removeLog}/>
                                 ))}
-                            </Table>
+                            </table>
                         </td>
                     </tr>
                 </>

@@ -8,7 +8,7 @@ import Home from '../routes/home';
 import Tasks from '../routes/tasks';
 
 const App = () => (
-	<div id="app">
+	<div id="app" class="font-mono">
 		<Header />
 		<Router>
 			<Home path="/" />

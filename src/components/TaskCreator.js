@@ -1,10 +1,5 @@
 import {Component, h} from 'preact';
-import {useEffect, useState} from "preact/hooks";
-import * as dayjs from "dayjs";
 import Task from "../models/Task";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import InputGroup from "react-bootstrap/InputGroup";
 
 export default class TaskCreator extends Component {
     onSubmit(e) {
@@ -20,15 +15,15 @@ export default class TaskCreator extends Component {
 
     render() {
         return (
-            <Form onsubmit={this.onSubmit.bind(this)} inline>
-                <Form.Label htmlFor="taskName">Nom de la tâche</Form.Label>
-                <Form.Control
+            <form onSubmit={this.onSubmit.bind(this)}>
+                <label htmlFor="taskName">Nom de la tâche</label>
+                <input
                     id="taskName"
                     name="taskName"
                     type="text"
                 />
-                <Button type="submit">Ajouter une tâche</Button>
-            </Form>
+                <button type="submit">Ajouter une tâche</button>
+            </form>
         )
     }
 }

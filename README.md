@@ -31,3 +31,13 @@ For detailed explanation on how things work, checkout the [CLI Readme](https://g
 - [Preact](https://preactjs.com/guide/v10/getting-started/)
 - [Bootstrap](https://react-bootstrap.netlify.app/)
 - [Icon set](https://remixicon.com/)
+- [TailwindCSS with pReact](https://dev.to/boywithsilverwings/configuring-preact-cli-with-tailwind-css-3ckj)
+
+### PostCSS8 compatibility
+
+- [Compatibility with preact/tailwindcss/postcss7](https://tailwindcss.com/docs/installation#post-css-7-compatibility-build)
+
+```shell
+npm uninstall tailwindcss @tailwindcss/postcss7-compat
+npm install tailwindcss@latest postcss@latest autoprefixer@latest
+```

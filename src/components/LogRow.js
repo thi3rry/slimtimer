@@ -2,9 +2,6 @@ import { h } from 'preact';
 import dayjs from "dayjs";
 import {Component} from "preact";
 import TimeLog from "../models/TimeLog";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 
 export default class LogRow extends Component {
     state = {
@@ -85,7 +82,6 @@ export default class LogRow extends Component {
     }
 
     render() {
-        console.log('render log', this.state);
         return (
             <tr>
                 <td colSpan="1"></td>
@@ -110,20 +106,35 @@ export default class LogRow extends Component {
                     />
                 </td>
                 <td>
-                    <Form.Control style={{color: this.state.type === TimeLog.TYPE_START ? 'green' : 'black'}} as="select" value={this.state.type} custom onChange={(e) => this.updateLog({...this.state, type: e.target.value})}>
+                    <select
+                        style={{color: this.state.type === TimeLog.TYPE_START ? 'green' : 'black'}}
+                        value={this.state.type}
+                        onChange={(e) => this.updateLog({
+                            ...this.state,
+                            type: e.target.value
+                        })}
+                    >
                         <option value={this.state.type}>{this.state.type}</option>
                         <option value="START">START</option>
                         <option value="PAUSE">PAUSE</option>
-                    </Form.Control>
+                    </select>
                 </td>
                 <td>
                     <blockquote>{this.state.description}</blockquote>
                 </td>
                 <td>
-                    <ButtonGroup>
-                        <Button variant="outline-primary" type="button" onclick={() => this.promptEditLog()}>Edit</Button>
-                        <Button variant="outline-danger" type="button" onclick={() => this.removeLog()}>Remove</Button>
-                    </ButtonGroup>
+                    <button
+                        type="button"
+                        onClick={() => this.promptEditLog()}
+                    >
+                        Edit
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => this.removeLog()}
+                    >
+                        Remove
+                    </button>
                 </td>
             </tr>
         );

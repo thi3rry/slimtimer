@@ -1,6 +1,11 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import '~remixicon/fonts/remixicon.css';
 
+@import "tailwindcss/base";
+@import "custom-base.scss";
+
+@import "tailwindcss/components";
+
+@import "tailwindcss/utilities";
+@import '~remixicon/fonts/remixicon.css';
 
 html, body {
 	height: 100%;
