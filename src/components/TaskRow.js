@@ -7,18 +7,15 @@ import Task from "../models/Task";
 import Button from 'react-bootstrap/Button';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import {Form} from "react-bootstrap";
+import LogRow from "./LogRow";
 
 
 const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
 
-    const [isPlaying, setIsPlaying] = useState(false);
-    const [description, setDescription] = useState('');
+    const [isPlaying, setIsPlaying] = useState(task?.getLastLog?.()?.type === TimeLog.TYPE_START);
+    const [description, setDescription] = useState(isPlaying ? task.getLastLog().description : '');
 
 
-    setIsPlaying(task?.getLastLog?.()?.type === TimeLog.TYPE_START);
-    if (isPlaying) {
-        setDescription(task.getLastLog().description);
-    }
     const togglePlayPause = useCallback((e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -47,17 +44,10 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
         updateTask(task, new Task(updatedTask))
     });
 
-    const updateLogDate = useCallback((log, date = null, time = null) => {
-        let updatedDate = date;
-        let updatedTime = time;
-        if (time === null) {
-            updatedTime = log.date.format('HH:mm:ss');
-        }
-        if (date === null) {
-            updatedDate = log.date.format('YYYY-MM-DD');
-        }
-        console.log('updateLogDate', updatedDate, updatedTime);
-        updateLog(log, {...log, date: dayjs(`${updatedDate} ${updatedTime}`)});
+    const removeLog = useCallback((log) => {
+        const updatedTask = new Task(task);
+        task.timeLog.splice(task.timeLog.indexOf(log), 1)
+        updateTask(task, task);
     });
 
     return (
@@ -74,7 +64,7 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                     <Form action="" onsubmit={(e) => togglePlayPause(e) } inline={true}>
                         <Form.Group>
                             <Form.Control
-                                placeholder="Description"
+                                placeholder={isPlaying ? "Réellement fait" : "Prévue"}
                                 type="text"
                                 value={description}
                                 oninput={(e) => setDescription(e.target.value)}
@@ -95,7 +85,9 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                         <Button variant="outline-primary" type="button" onclick={() => moveTaskDown(task)}>v</Button>
                         <Button variant="outline-primary" type="button" onclick={() => {
                             const newName = prompt('Change name', task.name);
-                            updateTask(task, {...task, name: newName});
+                            if (newName !== null && newName != task.name) {
+                                updateTask(task, {...task, name: newName});
+                            }
                         }}>Edit</Button>
                         <Button variant="outline-primary" type="button" onclick={() => removeTask(task)}>X</Button>
                     </ButtonGroup>
@@ -109,35 +101,7 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                         </td>
                     </tr>
                     {task.timeLog.map(log => (
-                        <tr>
-                            <td colspan="1"></td>
-                            <td><input type="date" onkeydown={() => false} value={log.date.format('YYYY-MM-DD')} onChange={(e) => {
-                                updateLogDate(log, e.target.value);
-                            }}/></td>
-                            <td><input type="time" onkeydown={() => false} value={log.date.format('HH:mm')} onChange={(e) => {
-                                updateLogDate(log, null, `${e.target.value}:00`);
-
-                            }}/></td>
-                            <td style={{color: log.type === TimeLog.TYPE_START ? 'green' : 'black'}}>{log.type}</td>
-                            <td><blockquote>{log.description}</blockquote></td>
-                            <td>
-                                <ButtonGroup>
-                                    <Button variant="outline-primary" type="button" onclick={() => {
-                                        const updatedTask = {...task};
-                                        const updatedLog = {...log};
-                                        log.description = prompt('Description ?', updatedLog.description);
-                                        log.type = prompt('Type ?', updatedLog.type);
-                                        log.date = dayjs(prompt('Date ?', updatedLog.date));
-                                        updateLog(log, log);
-                                    }}>Edit</Button>
-                                    <Button variant="outline-danger" type="button" onclick={() => {
-                                        const updatedTask = new Task(task);
-                                        task.timeLog.splice(task.timeLog.indexOf(log), 1)
-                                        updateTask(task, task);
-                                    }}>Remove</Button>
-                                </ButtonGroup>
-                            </td>
-                        </tr>
+                        <LogRow log={log} updateLog={updateLog} removeLog={removeLog}/>
                     ))}
                 </>
             )}

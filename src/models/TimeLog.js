@@ -4,6 +4,10 @@ export default class TimeLog {
     static TYPE_START = 'START';
     static TYPE_PAUSE = 'PAUSE';
 
+    date;
+    description = '';
+    type;
+
     static getTypes() {
         return [
             this.TYPE_START,
@@ -16,8 +20,12 @@ export default class TimeLog {
     }
 
     constructor(attr) {
-        Object.assign(this, attr);
         this.date = dayjs();
+
+
+        if (attr?.description) {
+            this.description = attr.description;
+        }
         if (attr?.date) {
             this.date = dayjs(attr.date);
         }
@@ -26,7 +34,7 @@ export default class TimeLog {
                 this.type = attr.type;
             }
             else {
-                throw 'Invalid type passed';
+                throw `Invalid type "${attr.type}" passed`;
             }
         }
     }

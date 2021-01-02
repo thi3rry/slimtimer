@@ -12,7 +12,15 @@ export default class Task {
     constructor(attr) {
         this.createdAt = dayjs(new Date());
 
-        Object.assign(this, attr);
+        if (attr?.name) {
+            this.name = attr.name;
+        }
+        if (attr?.position) {
+            this.position = attr.position;
+        }
+        if (attr?.expanded) {
+            this.expanded = attr.expanded;
+        }
         if (attr?.createdAt) {
             this.createdAt = dayjs(attr.createdAt);
         }
@@ -28,10 +36,12 @@ export default class Task {
      * @returns {*}
      */
     getLastLog() {
-        const logs = [...this.timeLog].map(log => new TimeLog(log));
+        const logs = [...this.timeLog].map(log => new TimeLog(log))
+            // Remove futures logs
+            .filter((log) => log.date <= dayjs())
+        ;
         logs.sort((a, b) => b?.date - a?.date);
-        const last = new TimeLog(logs.shift());
-        return last;
+        return new TimeLog(logs.shift());
     }
 
     /**
