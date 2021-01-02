@@ -10,17 +10,17 @@ export default class LogRow extends Component {
         ...(new TimeLog())
     };
 
-    static getDerivedStateFromProps(nextProps, state) {
+    static getDerivedStateFromProps({log, updateLog, removeLog}, state) {
         const updatedState = {...state};
 
-        if (nextProps.log.date !== state.date) {
-            updatedState.date = nextProps.log.date;
+        if (log.date !== state.date) {
+            updatedState.date = log.date;
         }
-        if (nextProps.log.type !== state.type) {
-            updatedState.type = nextProps.log.type;
+        if (log.type !== state.type) {
+            updatedState.type = log.type;
         }
-        if (nextProps.log.description !== state.description) {
-            updatedState.description = nextProps.log.description;
+        if (log.description !== state.description) {
+            updatedState.description = log.description;
         }
         return updatedState;
     }
@@ -36,7 +36,12 @@ export default class LogRow extends Component {
             ...this.state,
             ...newLog
         });
-        this.props.updateLog(this.props.log, newLog);
+        if (this.props.updateLog) {
+            this.props.updateLog(this.props.log, newLog);
+        }
+        else {
+            throw new Error('`updateLog` prop was lost or not passed to LogRow component.');
+        }
     }
 
     updateLogDate(date = null, time = null) {
@@ -70,7 +75,12 @@ export default class LogRow extends Component {
     }
 
     removeLog() {
-        this.props.removeLog(this.props.log);
+        if (this.props.removeLog) {
+            this.props.removeLog(this.props.log);
+        }
+        else {
+            throw new Error('`removeLog` prop was lost or not passed to LogRow component.');
+        }
     }
 
     render() {
