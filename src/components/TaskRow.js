@@ -98,6 +98,7 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                         </button>
                         <button
                             type="button"
+                            class="text-red-800 focus:ring-red-800"
                             onClick={() => removeTask(task)}
                         ><i className="ri-delete-bin-2-line"></i>
                         </button>

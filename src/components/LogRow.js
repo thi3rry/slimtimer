@@ -131,6 +131,7 @@ export default class LogRow extends Component {
                     </button>
                     <button
                         type="button"
+                        class="text-red-800 border-red-800 focus:ring-red-800"
                         onClick={() => this.removeLog()}
                     >
                         Remove
