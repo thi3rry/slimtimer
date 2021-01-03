@@ -1,5 +1,6 @@
 import {Component, h} from 'preact';
-import Task from "../models/Task";
+import Task from "../../models/Task";
+import style from './TaskCreator.scss';
 
 export default class TaskCreator extends Component {
     onSubmit(e) {
@@ -15,7 +16,7 @@ export default class TaskCreator extends Component {
 
     render() {
         return (
-            <form onSubmit={this.onSubmit.bind(this)}>
+            <form class={style.taskcreator}  onSubmit={this.onSubmit.bind(this)}>
                 <label htmlFor="taskName">Nom de la tâche</label>
                 <input
                     id="taskName"

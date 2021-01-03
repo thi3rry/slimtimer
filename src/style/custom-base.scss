@@ -1,2 +1,61 @@
-@import "./base/buttons.scss";
-@import "./base/input.scss";
+
+@layer base {
+  input {
+    @apply text-base font-medium focus:ring-4 focus:outline-none p-1 border-2 rounded;
+  }
+
+  select {
+    @apply text-base font-medium p-1 border-2 rounded focus:ring-4 focus:outline-none;
+  }
+
+  blockquote {
+    @apply italic text-base font-medium font-serif p-2;
+  }
+
+  button {
+    @apply text-base font-medium border-2 rounded p-1 focus:ring-4 focus:outline-none;
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+
+  .button-group {
+    button {
+      @apply border-2 rounded-t-none rounded-b-none border-l-0;
+    }
+    button:first-child {
+      @apply border-r-2 border-l-2;
+      @apply rounded-l rounded-r-none;
+    }
+    button:last-child {
+      @apply border-l-0;
+      @apply rounded-r rounded-l-none;
+    }
+  }
+
+  table {
+    @apply min-w-full divide-y divide-gray-200;
+
+    thead {
+      @apply bg-gray-50;
+    }
+
+    th {
+      @apply px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+    }
+
+    tbody {
+      @apply bg-white divide-y divide-gray-200;
+    }
+
+    td {
+      @apply px-2 py-4 whitespace-nowrap;
+    }
+  }
+
+  label {
+    @apply block text-sm font-medium text-gray-700;
+  }
+
+}
+

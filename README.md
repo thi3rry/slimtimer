@@ -29,9 +29,11 @@ For detailed explanation on how things work, checkout the [CLI Readme](https://g
 ## Resources
 
 - [Preact](https://preactjs.com/guide/v10/getting-started/)
-- [Bootstrap](https://react-bootstrap.netlify.app/)
-- [Icon set](https://remixicon.com/)
+- [React Lifecycle](https://twitter.com/dan_abramov/status/981712092611989509)
 - [TailwindCSS with pReact](https://dev.to/boywithsilverwings/configuring-preact-cli-with-tailwind-css-3ckj)
+  - https://nystudio107.com/blog/speeding-up-tailwind-css-builds
+  - [Tailwindcss slow webpack compilation](https://rubyyagi.com/solve-slow-webpack-compilation/)
+- [FontAwesome with React](https://fontawesome.com/how-to-use/on-the-web/using-with/react)
 
 ### PostCSS8 compatibility
 

@@ -5,7 +5,8 @@ import TaskTotalTime from "./TaskTotalTime";
 import TimeLog from "../models/TimeLog";
 import Task from "../models/Task";
 import LogRow from "./LogRow";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faArrowDown, faArrowUp, faPencilAlt, faTrash} from "@fortawesome/free-solid-svg-icons";
 
 const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
 
@@ -57,8 +58,7 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                             updateTask(task, new Task({...task, expanded: !task.expanded}))
                         }}
                     >
-                        {task.expanded ? (<i className="ri-add-box-line"></i>
-                        ) : (<i className="ri-checkbox-indeterminate-line"></i>)}
+                        <FontAwesomeIcon icon={['far', task.expanded ? 'plus-square' : 'minus-square']}/>
                     </button>
                 </td>
                 <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}>
@@ -76,31 +76,33 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                                 onInput={(e) => setDescription(e.target.value)}
                             />
                             <button type="submit" >
-                                {!isPlaying && (<i class="ri-play-line"></i>)}
-                                {isPlaying && (<i class="ri-pause-line"></i>)}
-
+                                <FontAwesomeIcon icon={isPlaying ? 'pause' : 'play'}/>
                             </button>
                     </form>
                 </td>
 
                 <td>
                     <div className="button-group">
-                        <button type="button" onClick={() => moveTaskUp(task)}><i className="ri-arrow-up-line"></i>
+                        <button type="button" onClick={() => moveTaskUp(task)}>
+                            <FontAwesomeIcon icon={faArrowUp}/>
                         </button>
-                        <button type="button" onClick={() => moveTaskDown(task)}><i className="ri-arrow-down-line"></i>
+                        <button type="button" onClick={() => moveTaskDown(task)}>
+                            <FontAwesomeIcon icon={faArrowDown}/>
                         </button>
                         <button type="button" onClick={() => {
                             const newName = prompt('Change name', task.name);
                             if (newName !== null && newName !== task.name) {
                                 updateTask(task, {...task, name: newName});
                             }
-                        }}><i className="ri-edit-2-line"></i>
+                        }}>
+                            <FontAwesomeIcon icon={faPencilAlt}/>
                         </button>
                         <button
                             type="button"
                             class="text-red-800 focus:ring-red-800"
                             onClick={() => removeTask(task)}
-                        ><i className="ri-delete-bin-2-line"></i>
+                        >
+                            <FontAwesomeIcon icon={faTrash}/>
                         </button>
                     </div>
                 </td>
