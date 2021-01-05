@@ -58,7 +58,7 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                             updateTask(task, new Task({...task, expanded: !task.expanded}))
                         }}
                     >
-                        <FontAwesomeIcon icon={['far', task.expanded ? 'plus-square' : 'minus-square']}/>
+                        <FontAwesomeIcon icon={['far', task.expanded ? 'minus-square' : 'plus-square']} />
                     </button>
                 </td>
                 <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}>
