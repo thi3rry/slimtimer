@@ -74,7 +74,13 @@ const Tasks = () => {
 				{' '}
 				Clicked {count} times.
 			</p>
-
+			<button onClick={() => {
+				const currentExportedTasks = JSON.stringify(tasks);
+				const updatedTasksInput = prompt('Copy or paste all tasks', currentExportedTasks);
+				if (updatedTasksInput !== null && currentExportedTasks !== updatedTasksInput) {
+					updateTasks(JSON.parse(updatedTasksInput));
+				}
+			}}>Export / Import</button>
 			<div>
 				<TaskCreator onSubmit={(newTask) => addTask(newTask)}/>
 				<TasksList tasks={tasks} removeTask={removeTask} updateTask={updateTask} moveTaskUp={moveTaskUp} moveTaskDown={moveTaskDown} />
