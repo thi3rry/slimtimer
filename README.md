@@ -5,6 +5,19 @@ Initialized 2020-12-31
 From : https://slimtimer.wordpress.com/2019/11/17/slimtimer-shutting-down-on-dec-15-2019/
 Features : https://www.youtube.com/watch?v=CeedXS-eZTI
 
+## TODO
+
+- [ ] show last elapsed time for each task
+- [ ] add tags to tasks
+- [ ] List all timelogs in separate page
+- [ ] only show current tasks in progress
+- [ ] Test service-worker and offline support
+- [ ] display a table of tags with elapsed time of each
+- [ ] display a graph (camenbert) of tags & task by : day/week/month
+- [ ] display a graph (courbes) of tags & task by : day/week/month
+- [ ] Simple log message (date/message/tag)
+- [ ] Calendar view of timelogs
+
 ## CLI Commands
 
 ``` bash

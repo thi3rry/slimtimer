@@ -4,6 +4,8 @@ import style from './style.css';
 import TaskCreator from '../../components/TaskCreator';
 import TasksList from "../../components/TasksList";
 import Task from "../../models/Task";
+import Modal from "../../components/Modal";
+import TaskExporter from "../../components/TaskExporter";
 
 
 const loadStateFromStorage = () => {
@@ -72,14 +74,8 @@ const Tasks = () => {
 
 	return (
 		<div class={style.tasks}>
-			<button onClick={() => {
-				const currentExportedTasks = JSON.stringify(tasks);
-				const updatedTasksInput = prompt('Copy or paste all tasks', currentExportedTasks);
-				if (updatedTasksInput !== null && currentExportedTasks !== updatedTasksInput) {
-					updateTasks(JSON.parse(updatedTasksInput));
-				}
-			}}>Export / Import</button>
 			<div>
+				<TaskExporter tasks={tasks} updateTasks={updateTasks} />
 				<TaskCreator onSubmit={(newTask) => addTask(newTask)} />
 				<TasksList tasks={tasks} removeTask={removeTask} updateTask={updateTask} moveTaskUp={moveTaskUp} moveTaskDown={moveTaskDown} />
 			</div>
