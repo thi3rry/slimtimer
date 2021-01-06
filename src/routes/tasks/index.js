@@ -63,17 +63,8 @@ const Tasks = () => {
 		}
 	});
 
-	const [count, setCount] = useState(1);
-
 	return (
-		<div class={style.profile}>
-			<Clock style={{color: "green"}}/>
-
-			<p>
-				<button onClick={() => setCount((count) => count + 1)}>Click Me</button>
-				{' '}
-				Clicked {count} times.
-			</p>
+		<div class={style.tasks}>
 			<button onClick={() => {
 				const currentExportedTasks = JSON.stringify(tasks);
 				const updatedTasksInput = prompt('Copy or paste all tasks', currentExportedTasks);

@@ -4,7 +4,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import App from './components/app';
 import './dayjs'
 
-import {faMinusSquare, faPlusSquare, far} from '@fortawesome/free-regular-svg-icons';
+import {faMinusSquare, faPlusSquare} from '@fortawesome/free-regular-svg-icons';
 import {faPlay} from '@fortawesome/free-solid-svg-icons'
 import {faPause} from "@fortawesome/free-solid-svg-icons/faPause";
 

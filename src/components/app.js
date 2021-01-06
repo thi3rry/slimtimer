@@ -14,7 +14,9 @@ const App = () => (
 		<Header />
 		<Router history={createHashHistory()}>
 			<Home path="/" />
-			<Tasks path="/tasks"/>
+			<Tasks path="/tasks" />
+			<Home path="/tags" />
+			<Home path="/timelogs" />
 		</Router>
 	</div>
 )

@@ -1,5 +1,6 @@
-.profile {
-	padding: 56px 20px;
+.tasks {
+	margin-top: 56px;
+	@apply p-2;
 	min-height: 100%;
 	width: 100%;
 }
