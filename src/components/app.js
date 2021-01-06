@@ -12,11 +12,9 @@ import Tasks from '../routes/tasks';
 const App = () => (
 	<div id="app" class="font-mono">
 		<Header />
-		<Router history={createHashHistory()}>
+		<Router>
 			<Home path="/" />
 			<Tasks path="/tasks" />
-			<Home path="/tags" />
-			<Home path="/timelogs" />
 		</Router>
 	</div>
 )

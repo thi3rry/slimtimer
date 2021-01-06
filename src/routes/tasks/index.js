@@ -1,15 +1,18 @@
 import { h } from 'preact';
-import {useCallback, useEffect, useState} from "preact/hooks";
+import {useCallback, useState} from "preact/hooks";
 import style from './style.css';
 import TaskCreator from '../../components/TaskCreator';
-import * as dayjs from "dayjs";
-import Clock from "../../components/Clock";
 import TasksList from "../../components/TasksList";
 import Task from "../../models/Task";
 
 
 const loadStateFromStorage = () => {
-	const tasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
+	let tasks = [];
+
+	// @see https://preactjs.com/cli/pre-rendering/
+	if (typeof window !== 'undefined') {
+		tasks = JSON.parse(window.localStorage.getItem('tasks'));
+	}
 
 	return {
 		tasks: tasks.map(task => new Task(task)).sort((ta, tb) => ta?.position - tb?.position)
@@ -27,7 +30,11 @@ const Tasks = () => {
 			.map((task, i) => new Task({...task, position: i})) // recompute all position
 		;
 		setTasks(tasksUpdated);
-		window.localStorage.setItem('tasks', JSON.stringify(tasksUpdated));
+
+		// @see https://preactjs.com/cli/pre-rendering/
+		if (typeof window !== 'undefined') {
+			window.localStorage.setItem('tasks', JSON.stringify(tasksUpdated));
+		}
 	}
 
 	const addTask = useCallback((_task) => {
@@ -73,7 +80,7 @@ const Tasks = () => {
 				}
 			}}>Export / Import</button>
 			<div>
-				<TaskCreator onSubmit={(newTask) => addTask(newTask)}/>
+				<TaskCreator onSubmit={(newTask) => addTask(newTask)} />
 				<TasksList tasks={tasks} removeTask={removeTask} updateTask={updateTask} moveTaskUp={moveTaskUp} moveTaskDown={moveTaskDown} />
 			</div>
 		</div>

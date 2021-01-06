@@ -1,6 +1,5 @@
-import { h } from 'preact';
+import { h, Component } from 'preact';
 import dayjs from "dayjs";
-import {Component} from "preact";
 import TimeLog from "../models/TimeLog";
 
 export default class LogRow extends Component {

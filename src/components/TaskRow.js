@@ -6,7 +6,10 @@ import TimeLog from "../models/TimeLog";
 import Task from "../models/Task";
 import LogRow from "./LogRow";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {faArrowDown, faArrowUp, faPencilAlt, faTrash} from "@fortawesome/free-solid-svg-icons";
+import {faArrowDown} from "@fortawesome/free-solid-svg-icons/faArrowDown";
+import {faArrowUp} from "@fortawesome/free-solid-svg-icons/faArrowUp";
+import {faPencilAlt} from "@fortawesome/free-solid-svg-icons/faPencilAlt";
+import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
 
 const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
 
