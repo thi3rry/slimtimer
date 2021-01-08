@@ -8,6 +8,10 @@ I just want to get the features to create a new project for learning React & Tai
 
 For full features of the original SlimTime see this video of Richard White. : https://www.youtube.com/watch?v=CeedXS-eZTI
 
+## Demo
+
+Hosted on [Vercel](https://vercel.com) here : [https://slimtimer.vercel.app](https://slimtimer.vercel.app/)
+
 ## TODO
 
 - [ ] show last elapsed time for each task
