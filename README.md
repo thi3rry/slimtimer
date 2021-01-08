@@ -14,6 +14,7 @@ Hosted on [Vercel](https://vercel.com) here : [https://slimtimer.vercel.app](htt
 
 ## TODO
 
+- [x] mobile view optimization
 - [ ] show last elapsed time for each task
 - [ ] add tags to tasks
 - [ ] List all timelogs in separate page
@@ -24,6 +25,7 @@ Hosted on [Vercel](https://vercel.com) here : [https://slimtimer.vercel.app](htt
 - [ ] display a graph (courbes) of tags & task by : day/week/month
 - [ ] Simple log message (date/message/tag)
 - [ ] Calendar view of timelogs
+- [ ] Allow drag'n'drop to reorder Tasks
 
 ## CLI Commands
 

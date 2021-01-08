@@ -59,10 +59,10 @@ export default class TaskTotalTime extends Component {
         const seconds = dayjs.duration(totalTime).seconds();
         return (
             <>
-                {days ? `${days}j` : ''}
-                {hours ? ` ${hours}h` : ''}
-                {minutes ? ` ${minutes}min` : ''}
-                {days < 1 && seconds ? ` ${seconds}s` : ''}
+                {days ? (<span>{`${days}j`} </span>) : ''}
+                {hours ? (<span>{`${hours}h`} </span>) : ''}
+                {minutes ? (<span>{`${minutes}minutes`} </span>) : ''}
+                {days < 1 && seconds ? (<span> {`${seconds}s`}</span>) : ''}
             </>
         );
     }

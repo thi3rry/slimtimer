@@ -10,34 +10,11 @@ import {faArrowDown} from "@fortawesome/free-solid-svg-icons/faArrowDown";
 import {faArrowUp} from "@fortawesome/free-solid-svg-icons/faArrowUp";
 import {faPencilAlt} from "@fortawesome/free-solid-svg-icons/faPencilAlt";
 import {faTrash} from "@fortawesome/free-solid-svg-icons/faTrash";
+import TaskPlayer from "./TaskPlayer";
 
 const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
 
     const [isPlaying, setIsPlaying] = useState(task?.getLastLog?.()?.type === TimeLog.TYPE_START);
-    const [description, setDescription] = useState(isPlaying ? task.getLastLog().description : '');
-
-
-    const togglePlayPause = useCallback((e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        const newTimeLog = new TimeLog({
-            description
-        });
-        if (isPlaying) {
-            newTimeLog.type = TimeLog.TYPE_PAUSE;
-        }
-        else {
-            newTimeLog.type = TimeLog.TYPE_START;
-        }
-        updateTask(task, new Task({
-            ...task,
-            timeLog: [...task.timeLog, newTimeLog]
-        }));
-        setIsPlaying(!isPlaying);
-        setDescription('');
-    });
-
-
     const updateLog = useCallback((old, updatedLog) => {
         const updatedTask = {...task};
         updatedTask.timeLog.splice(updatedTask.timeLog.indexOf(old), 1, new TimeLog(updatedLog))
@@ -46,7 +23,6 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
     });
 
     const removeLog = useCallback((log) => {
-        const updatedTask = new Task(task);
         task.timeLog.splice(task.timeLog.indexOf(log), 1)
         updateTask(task, task);
     });
@@ -54,7 +30,7 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
     return (
         <>
             <tr class={isPlaying ? 'in-progress' : ''}>
-                <td>
+                <td class="">
                     <button
                         type="button"
                         onClick={() => {
@@ -64,26 +40,14 @@ const TaskRow = ({task, removeTask, updateTask, moveTaskUp, moveTaskDown}) => {
                         <FontAwesomeIcon icon={['far', task.expanded ? 'minus-square' : 'plus-square']} />
                     </button>
                 </td>
-                <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}>
-                    {task.name}
-                </td>
-                <td style={{fontWeight: isPlaying ? 'bold': 'normal'}}>
-                    <TaskTotalTime task={task} key={JSON.stringify(task)}/>
-                </td>
                 <td>
-                    <form action="" onSubmit={(e) => togglePlayPause(e) }>
-                            <input
-                                placeholder={isPlaying ? "Réellement fait" : "Prévue"}
-                                type="text"
-                                value={description}
-                                onInput={(e) => setDescription(e.target.value)}
-                            />
-                            <button type="submit" >
-                                <FontAwesomeIcon icon={isPlaying ? 'pause' : 'play'}/>
-                            </button>
-                    </form>
-                </td>
+                    <div class="flex flex-col sm:flex-row justify-between">
+                        <span style={{fontWeight: isPlaying ? 'bold': 'normal'}}>{task.name}</span>
+                        <span style={{fontWeight: isPlaying ? 'bold': 'normal'}}>(<TaskTotalTime task={task} key={JSON.stringify(task)} />)</span>
+                        <TaskPlayer task={task} updateTask={updateTask} />
 
+                    </div>
+                </td>
                 <td>
                     <div className="button-group">
                         <button type="button" onClick={() => moveTaskUp(task)}>
