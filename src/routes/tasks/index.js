@@ -13,7 +13,7 @@ const loadStateFromStorage = () => {
 
 	// @see https://preactjs.com/cli/pre-rendering/
 	if (typeof window !== 'undefined') {
-		tasks = JSON.parse(window.localStorage.getItem('tasks'));
+		tasks = JSON.parse(window.localStorage.getItem('tasks')) || [];
 	}
 
 	return {
