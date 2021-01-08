@@ -2,8 +2,11 @@
 
 Initialized 2020-12-31
 
-From : https://slimtimer.wordpress.com/2019/11/17/slimtimer-shutting-down-on-dec-15-2019/
-Features : https://www.youtube.com/watch?v=CeedXS-eZTI
+From an old SlimTimer project by Richard White.
+Since it is not available https://slimtimer.wordpress.com/2019/11/17/slimtimer-shutting-down-on-dec-15-2019/
+I just want to get the features to create a new project for learning React & TailwindCSS skills with a performance and offline first approach.
+
+For full features of the original SlimTime see this video of Richard White. : https://www.youtube.com/watch?v=CeedXS-eZTI
 
 ## TODO
 
