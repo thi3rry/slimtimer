@@ -13,8 +13,7 @@ const App = () => (
 	<div id="app" class="font-mono">
 		<Header />
 		<Router>
-			<Home path="/" />
-			<Tasks path="/tasks" />
+			<Tasks path="/" />
 		</Router>
 	</div>
 )

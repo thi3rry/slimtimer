@@ -9,8 +9,7 @@ const Header = () => (
 		<Clock class={"hidden md:flex"} />
 		<Clock class={"hidden sm:flex md:hidden"} format="DD/MM/YYYY HH:mm:ss" />
 		<nav>
-			<Link activeClassName={style.active} href="/">Home</Link>
-			<Link activeClassName={style.active} href="/tasks">Tasks</Link>
+			<Link activeClassName={style.active} href="/">Tasks</Link>
 		</nav>
 	</header>
 );
